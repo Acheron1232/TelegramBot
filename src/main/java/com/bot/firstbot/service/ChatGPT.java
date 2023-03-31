@@ -1,4 +1,4 @@
-package com.bot.firstbot;
+package com.bot.firstbot.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -7,7 +7,7 @@ import java.net.URL;
 import org.json.JSONObject;
 
 public class ChatGPT {
-    public static void chatGPT(String text) throws Exception {
+    public static String chatGPT(String text) throws Exception {
         String url = "https://api.openai.com/v1/completions";
         HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 
@@ -26,11 +26,8 @@ public class ChatGPT {
 
         String output = new BufferedReader(new InputStreamReader(con.getInputStream())).lines()
                 .reduce((a, b) -> a + b).get();
-
-        System.out.println(new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text"));
+                System.out.println("ChatGPT " + new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text"));
+        return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
     }
 
-    public static void main(String[] args) throws Exception {
-        chatGPT("Hello, how are you?");
-    }
 }

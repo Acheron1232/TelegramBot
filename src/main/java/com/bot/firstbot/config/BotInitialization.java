@@ -1,5 +1,6 @@
-package com.bot.firstbot.service;
+package com.bot.firstbot.config;
 
+import com.bot.firstbot.service.TelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -13,14 +14,21 @@ public class BotInitialization {
     @Autowired
     TelegramBot bot;
     @EventListener({ContextRefreshedEvent.class})
-    public void init() throws TelegramApiException {
-        TelegramBotsApi telegramBotsApi =new TelegramBotsApi(DefaultBotSession.class);
+    public void init()  {
+        TelegramBotsApi telegramBotsApi = null;
+        try {
+            telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+        } catch (TelegramApiException e) {
+//            throw new RuntimeException(e);
+        }
+
 
         try {
             telegramBotsApi.registerBot(bot);
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
         }
+
 
     }
 }

@@ -1,4 +1,4 @@
-package com.bot.firstbot.service;
+package com.bot.firstbot.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
